@@ -1,3 +1,9 @@
+# exe
+mn
+
+# for vscode 
+.vscode/
+
 # Prerequisites
 *.d
 
