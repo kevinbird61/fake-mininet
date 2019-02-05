@@ -15,6 +15,7 @@ public:
     int gp_export(std::string filename);
 private:
     std::string dotfile;
+    std::string style;
     std::string body;
 };
 

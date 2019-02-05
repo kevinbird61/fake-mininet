@@ -1,7 +1,12 @@
 #include "gplot.h"
 
 Gplot::Gplot()
-{}
+{
+    this->style = 
+        std::string("rankdir=LR;\n")+
+        std::string("node [shape=record];\n")
+    ;
+}
 
 Gplot::~Gplot()
 {}
@@ -14,7 +19,9 @@ int Gplot::gp_add(Edge *elist)
     Edge *trav = elist;
     while(trav!=NULL){
         // add the node into this->body
-        this->body += (trav->head->name + "->" + trav->tail->name + "\n");
+        this->body += (trav->head->name)+" [label=\""+ trav->head->name + "(" + trav->head->type + ")\"];\n";
+        this->body += (trav->tail->name)+" [label=\""+ trav->tail->name + "(" + trav->tail->type + ")\"];\n";
+        this->body += (trav->head->name + "->" + trav->tail->name + ";\n");
         trav=trav->next;
     }
 }
@@ -26,10 +33,10 @@ std::string Gplot::gp_dump(bool flag)
     // then concate again
     if(flag==true){
         // dia
-        this->dotfile = "digraph G{\n" + this->body + "\n}";
+        this->dotfile = "digraph G{\n" + this->style + "\n" + this->body + "\n}";
     } else {
         // graph
-        this->dotfile = "graph G{\n" + this->body + "\n}";
+        this->dotfile = "graph G{\n" + this->style + "\n" + this->body + "\n}";
     }
 
     return this->dotfile;

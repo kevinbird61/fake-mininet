@@ -116,9 +116,14 @@ int sh_execute(vector<string> args)
             }
         }
     }
-    else if(args.at(0)=="pingAll"){
-        // show all the connected status
+    else if(args.at(0)=="net"){
+        // Display links
         nm.print_all_e();
+        return 1;
+    }
+    else if(args.at(0)=="nodes"){
+        // Display nodes
+        nm.print_all_v();
         return 1;
     }
     else if(args.at(0)=="debug"){
@@ -164,13 +169,17 @@ void print_help(){
     cout << "\nWelcome to use fakeCLI!" << "\n"
         << "Support commands:" << "\n"
         << "-----------------------------------------------------------------------------------------" << "\n"
-        << " help: print this helping message, to illustrate user how to use our service." << "\n" 
-        << " exit: close this fake CLI elegantly." << "\n"
-        << " debug: show the current status of network manager." << "\n"
+        << " \033[1;31m help \033[0m: print this helping message, to illustrate user how to use our service." << "\n" 
+        << " \033[1;31m exit \033[0m: close this fake CLI elegantly." << "\n"
+        << " \033[1;31m debug \033[0m: show the current status of network manager." << "\n"
         << "-----------------------------------------------------------------------------------------" << "\n"
-        << " create [host|switch] <device name>: create virtual device." << "\n"
-        << " link <device #1> <device #2>: connect 2 virtual devices." << "\n"
-        << " <device #1> ping <device #2>: check whether those devices are connected or not." << "\n"
+        << " \033[1;36m create\033[0m \033[33m[host|switch]\033[0m \033[92m<device name>\033[0m: create virtual device." << "\n"
+        << " \033[1;36m link\033[0m \033[92m<device #1> <device #2>\033[0m: connect 2 virtual devices." << "\n"
+        << " \033[92m <device #1>\033[0m \033[1;36mping\033[0m \033[92m<device #2>\033[0m: check whether those devices are connected or not." << "\n"
+        << " \033[1;36m net \033[0m: display links." << "\n"
+        << " \033[1;36m nodes \033[0m: display nodes (switch, host)." << "\n"
+        << " \033[1;36m plot \033[0m: show the current content of topology. (in dotfile format) " << "\n"
+        << " \033[1;36m export \033[0m\033[33m[filename]\033[0m: export the dotfile. (If you don't specify the filename, then will generate the dotfile with default setting)" << "\n"
         << "-----------------------------------------------------------------------------------------" << "\n"
         << endl;
 

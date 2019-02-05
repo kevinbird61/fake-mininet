@@ -1,6 +1,15 @@
 digraph G{
-s1->h1
-s1->h2
-h1->s1
+rankdir=LR;
+node [shape=record];
+
+s1 [label="s1(switch)"];
+h1 [label="h1(host)"];
+s1->h1;
+s1 [label="s1(switch)"];
+h2 [label="h2(host)"];
+s1->h2;
+h1 [label="h1(host)"];
+s1 [label="s1(switch)"];
+h1->s1;
 
 }
