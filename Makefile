@@ -1,5 +1,5 @@
 EXEC:=mn
-OBJS:=shell.o switch.o host.o edge.o hash.o nm.o
+OBJS:=shell.o switch.o host.o edge.o gplot.o hash.o nm.o
 CXXFLAGS:= -std=c++11
 
 all: $(EXEC)
@@ -18,6 +18,8 @@ host.o: lib/host.cc
 hash.o: lib/hash.cc 
 	g++ -c $^ -o $@ $(CXXFLAGS)
 edge.o: lib/edge.cc 
+	g++ -c $^ -o $@ $(CXXFLAGS)
+gplot.o: lib/gplot.cc
 	g++ -c $^ -o $@ $(CXXFLAGS)
 nm.o: lib/network_manager.cc 
 	g++ -c $^ -o $@ $(CXXFLAGS)

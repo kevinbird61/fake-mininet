@@ -14,7 +14,17 @@ Fake mininet, use for experiments and education.
 ## TODO
 
 * [ ] Output dot file for current topology.
-* [ ] Create real virtual device that support real network functions.
+* [x] Create real virtual device that support real network functions.
+
+## Example
+
+You can see the [example](example/):
+
+* Generate the simple graph, and export it's dotfile. And using graphviz to generate png from this dotfile.
+```bash
+$ make && ./mn < example/simple_graph.txt
+$ dot -Tpng example/simple_graph.dot -o example/simple_graph.png
+```
 
 ## Author
 

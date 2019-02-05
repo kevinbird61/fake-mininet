@@ -1,7 +1,9 @@
 #include "shell.h"
+#include "gplot.h"
 
 // global variables
 NetworkManager nm;
+Gplot gp;
 
 int sh_loop()
 {
@@ -124,6 +126,27 @@ int sh_execute(vector<string> args)
         nm.print_all_v();
         // print all edges
         nm.print_all_e();
+        return 1;
+    }
+    else if(args.at(0)=="plot"){
+        // send the edge list 
+        gp.gp_add(nm.elist);
+        cout<< "======================================================" << endl;
+        cout << gp.gp_dump(true) << endl;
+        cout<< "======================================================" << endl;
+        return 1;
+    }
+    else if(args.at(0)=="export"){
+        // dump the gplot content into a dotfile
+        // args.at(1): filename. If not existed, then use default setting
+        if(args.size() < 2){
+            // default
+            gp.gp_export(string("fake-mininet-gplot"));
+        } else {
+            // user's filename
+            gp.gp_export(string(args.at(1)));
+        }
+        cout << "Dotfile successfully exported." << endl;
         return 1;
     }
     else if(args.size()==1 && args.at(0)== ""){
