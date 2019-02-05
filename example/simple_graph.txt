@@ -1,9 +1,9 @@
 c h h1
 c h h2
 c sw s1
-link s1 h1
-link s1 h2
-link h1 s1
+link s1 h1 up
+link s1 h2 up
+link h1 s1 up
 plot
 export example/simple_graph
 exit

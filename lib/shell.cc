@@ -95,13 +95,19 @@ int sh_execute(vector<string> args)
     }
     else if(args.at(0)=="link"){
         // link
-        if(args.size() >= 3){
+        if(args.size() >= 4){
             // find two node in network manager
             // args[1]: head, args[2]: tail
-            nm.connect(args.at(1), args.at(2));
+            if(args.at(3)=="up"){
+                // create edge
+                nm.connect(args.at(1), args.at(2));
+            } else if(args.at(3)=="down"){
+                // delete edge
+                nm.disconnect(args.at(1), args.at(2));
+            }
         }
         else {
-            cout << "Please specify 2 objects, like `link s1 s2` or `link h1 s2` ... etc. Type `help` command to see more." << endl;
+            cout << "Please comply with the link command, like `link s1 s2 up` or `link h1 s2 down` ... etc. Type `help` command to see more." << endl;
         }
         return 1;
     }
@@ -174,7 +180,7 @@ void print_help(){
         << " \033[1;31m debug \033[0m: show the current status of network manager." << "\n"
         << "-----------------------------------------------------------------------------------------" << "\n"
         << " \033[1;36m create\033[0m \033[33m[host|switch]\033[0m \033[92m<device name>\033[0m: create virtual device." << "\n"
-        << " \033[1;36m link\033[0m \033[92m<device #1> <device #2>\033[0m: connect 2 virtual devices." << "\n"
+        << " \033[1;36m link\033[0m \033[92m<device #1> <device #2>\033[0m \033[33m[up|down]\033[0m: connect/disconnect 2 virtual devices." << "\n"
         << " \033[92m <device #1>\033[0m \033[1;36mping\033[0m \033[92m<device #2>\033[0m: check whether those devices are connected or not." << "\n"
         << " \033[1;36m net \033[0m: display links." << "\n"
         << " \033[1;36m nodes \033[0m: display nodes (switch, host)." << "\n"
@@ -185,5 +191,6 @@ void print_help(){
 
     cout << "If you have counter any problem, feel free to contact me: \n"
         << " Email: kevinbird61@gmail.com\n" 
+        << " Github: github.com/kevinbird61\n"
         << endl;
 }

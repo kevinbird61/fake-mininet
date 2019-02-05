@@ -19,6 +19,7 @@ public:
     void print_all_e(); // all edges
     // link 2 vertex 
     void connect(std::string hname, std::string tname);
+    void disconnect(std::string hname, std::string tname);
     int check_status(std::string hname, std::string tname);
     // member 
     Vertex **vlist;

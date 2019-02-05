@@ -6,7 +6,7 @@
 | :--- | :--- | :--- |
 | `create host <name>` | create a virtual host. | `c h <name>` |
 | `create switch <name>` | create a virtual switch. | `c sw <name>` |
-| `link <name #1> <name #2>` | create a virtual link between 2 points. | |
+| `link <name #1> <name #2> [up|down]` | connect/disconnect a virtual link between 2 points. | |
 | `<name #1> ping <name #2>` | if link is set, then ping will success | |
 | `net` | display links | |
 | `nodes` | display nodes (switch, host) | |

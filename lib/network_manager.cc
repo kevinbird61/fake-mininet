@@ -140,6 +140,53 @@ void NetworkManager::connect(std::string hname, std::string tname){
     std::cout << "Connect `" << hname << "` with `" << tname << "` successfully." << std::endl;
 }
 
+void NetworkManager::disconnect(std::string hname, std::string tname){
+    // check if hname(head) and tname(tail) existed or not
+    unsigned int index = djb2(hname.c_str())%this->tablesize;
+    Vertex *head, *tail;
+    Vertex *check = this->vlist[index];
+    int cnt=0;
+    while(check!=NULL){
+        if(check->name == hname){
+            head=check;
+            cnt++;
+            break;
+        }
+    }
+    index = djb2(tname.c_str())%this->tablesize;
+    check = this->vlist[index];
+    while(check!=NULL){
+        if(check->name == tname){
+            tail=check;
+            cnt++;
+            break;
+        }
+    }
+
+    if(cnt != 2){
+        std::cout << "Illegal name of vertex, please using print/debug command to check current topo." << std::endl;
+        return;
+    }
+
+    // find edge, and then destroy
+    Edge *traversal=this->elist,*prev=this->elist;
+    while(traversal!=NULL){
+        if(traversal->head->name==hname && traversal->tail->name==tname){
+            std::cout << "Disconnect `" << hname << "` with `" << tname << "` successfully." << std::endl;
+            if(prev==this->elist){
+                this->elist=this->elist->next;
+            } else {
+                prev->next=traversal->next;
+            }
+            return;
+        }
+        prev=traversal;
+        traversal=traversal->next;
+    }
+
+    std::cout << "Not found the connection between `" << hname << "` and `" << tname << "`. You can use `net` or `debug` to check the current status." << std::endl;
+}
+
 int NetworkManager::check_status(std::string hname, std::string tname){
     // check if hname(head) and tname(tail) existed or not
     unsigned int index = djb2(hname.c_str())%this->tablesize;
