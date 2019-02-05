@@ -13,8 +13,9 @@ Fake mininet, use for experiments and education.
 
 ## TODO
 
-* [ ] Output dot file for current topology.
-* [x] Create real virtual device that support real network functions.
+* [x] Output dot file for current topology.
+* [ ] Add more information/operation on edge. (For graph theory)
+* [ ] Create real virtual device that support real network functions.
 
 ## Example
 
