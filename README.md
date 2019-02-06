@@ -14,15 +14,20 @@ Fake mininet, use for experiments and education.
 ## TODO
 
 * [x] Output dot file for current topology.
-* [ ] Add more information/operation on edge. (For graph theory)
+* [x] Add more information/operation on edge. (For graph theory)
 * [ ] Create real virtual device that support real network functions.
 
 ## Example
 
 You can see the [example](example/):
 
-* Generate the simple graph, and export it's dotfile. And using graphviz to generate png from this dotfile.
-```bash
+| Scenario | Description | Command | Result |
+| :--- | :--- | :--- | :---: |
+| **Network Flow** | Generate the simple graph, and export it's dotfile. And using graphviz to generate png from this dotfile. | [1] | ![](example/simple_graph.png) |
+
+Command References:    
+[1]
+```sh
 $ make && ./mn < example/simple_graph.txt
 $ dot -Tpng example/simple_graph.dot -o example/simple_graph.png
 ```
