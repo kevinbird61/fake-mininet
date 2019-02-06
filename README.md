@@ -11,11 +11,11 @@ Fake mininet, use for experiments and education.
 * `./mn` to enter fake-mn's CLI.
 * Then you can use the supported commands to create your own fake network topology.
 
-## TODO
+## Usage
 
-* [x] Output dot file for current topology.
-* [x] Add more information/operation on edge. (For graph theory)
-* [ ] Create real virtual device that support real network functions.
+* Enter CLI directly (manual): `./mn`
+* Using script (mininet-like): `./mn -f <your script>`
+* API usage: run `make lib` first, and see `Example` part for other details.
 
 ## Example
 
@@ -23,14 +23,27 @@ You can see the [example](example/):
 
 | Scenario | Description | Command | Result |
 | :--- | :--- | :--- | :---: |
-| **Network Flow** | Generate the simple graph, and export it's dotfile. And using graphviz to generate png from this dotfile. | [1] | ![](example/simple_graph.png) |
+| **Network Flow** | Generate the simple graph, and export it's dotfile. And using graphviz to generate png from this dotfile. | [1] | ![](example/stdin/simple_graph.png) |
+| **API** | Using `make lib` to generate library of fake-mininet - `libfakemn.a`, and use it within your program. | [2] | [api example code](example/api/api.cc) |
 
 Command References:    
 [1]
 ```sh
-$ make && ./mn < example/simple_graph.txt
-$ dot -Tpng example/simple_graph.dot -o example/simple_graph.png
+$ make && ./mn < example/stdin/simple_graph.txt
+$ dot -Tpng example/stdin/simple_graph.dot -o example/stdin/simple_graph.png
 ```
+
+[2]
+```sh
+$ make lib && cp libfakemn.a example/api
+$ cd example/api && make
+```
+
+## TODO
+
+* [x] Output dot file for current topology.
+* [x] Add more information/operation on edge. (For graph theory)
+* [ ] Create real virtual device that support real network functions.
 
 ## Author
 

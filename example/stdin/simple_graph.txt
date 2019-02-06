@@ -19,5 +19,5 @@ sl x y cap 1
 sl v t val 0
 net
 plot
-export example/simple_graph
+export example/stdin/simple_graph
 exit

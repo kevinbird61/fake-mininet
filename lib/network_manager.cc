@@ -60,6 +60,54 @@ int NetworkManager::add_vertex(Vertex *v)
     return 0;
 }
 
+int NetworkManager::add_switch()
+{
+    Switch *sw;
+    sw = new Switch(this->get_sw_name());
+    this->add_vertex(sw);
+}
+
+int NetworkManager::add_switch(std::string name)
+{
+    Switch *sw;
+    sw = new Switch(name);
+    this->add_vertex(sw);
+}
+
+Switch *NetworkManager::create_switch()
+{
+    return new Switch(this->get_sw_name());
+}
+
+Switch *NetworkManager::create_switch(std::string name)
+{
+    return new Switch(name);
+}
+
+int NetworkManager::add_host()
+{
+    Host *h;
+    h = new Host(this->get_h_name());
+    this->add_vertex(h);
+}
+
+int NetworkManager::add_host(std::string name)
+{
+    Host *h;
+    h = new Host(name);
+    this->add_vertex(h);
+}
+
+Host *NetworkManager::create_host()
+{
+    return new Host(this->get_h_name());
+}
+
+Host *NetworkManager::create_host(std::string name)
+{
+    return new Host(name);
+}
+
 void NetworkManager::add_edge(Edge *e)
 {
     Edge *insert = this->elist;
@@ -140,6 +188,22 @@ void NetworkManager::connect(std::string hname, std::string tname){
     std::cout << "Connect `" << hname << "` with `" << tname << "` successfully." << std::endl;
 }
 
+void NetworkManager::linkup(Vertex *head, Vertex *tail)
+{
+    // add vertex first
+    this->add_vertex(head);
+    this->add_vertex(tail);
+
+    // create edge, and link those 2 together
+    Edge *e;
+    e = new Edge();
+    e->link(head, tail);
+    // push into nm
+    this->add_edge(e);
+
+    std::cout << "Connect `" << head->name << "` with `" << tail->name << "` successfully." << std::endl;
+}
+
 void NetworkManager::disconnect(std::string hname, std::string tname){
     // check if hname(head) and tname(tail) existed or not
     unsigned int index = djb2(hname.c_str())%this->tablesize;
@@ -185,6 +249,51 @@ void NetworkManager::disconnect(std::string hname, std::string tname){
     }
 
     std::cout << "Not found the connection between `" << hname << "` and `" << tname << "`. You can use `net` or `debug` to check the current status." << std::endl;
+}
+
+void NetworkManager::linkdown(Vertex *head, Vertex *tail)
+{
+    // check if hname(head) and tname(tail) existed or not
+    unsigned int index = djb2(head->name.c_str())%this->tablesize;
+    Vertex *check = this->vlist[index];
+    int cnt=0;
+    while(check!=NULL){
+        if(check->name == head->name){
+            cnt++;
+            break;
+        }
+    }
+    index = djb2(tail->name.c_str())%this->tablesize;
+    check = this->vlist[index];
+    while(check!=NULL){
+        if(check->name == tail->name){
+            cnt++;
+            break;
+        }
+    }
+
+    if(cnt != 2){
+        std::cout << "Illegal name of vertex, please using print/debug command to check current topo." << std::endl;
+        return;
+    }
+
+    // find edge, and then destroy
+    Edge *traversal=this->elist,*prev=this->elist;
+    while(traversal!=NULL){
+        if(traversal->head->name==head->name && traversal->tail->name==tail->name){
+            std::cout << "Disconnect `" << head->name << "` with `" << tail->name << "` successfully." << std::endl;
+            if(prev==this->elist){
+                this->elist=this->elist->next;
+            } else {
+                prev->next=traversal->next;
+            }
+            return;
+        }
+        prev=traversal;
+        traversal=traversal->next;
+    }
+
+    std::cout << "Not found the connection between `" << head->name << "` and `" << tail->name << "`. You can use `net` or `debug` to check the current status." << std::endl;
 }
 
 void NetworkManager::setlink(std::string hname, std::string tname, int mode, unsigned int val){
@@ -289,4 +398,19 @@ std::string NetworkManager::get_sw_name()
 std::string NetworkManager::get_h_name()
 {
     return std::string("h"+std::to_string(this->host_num++));
+}
+
+void NetworkManager::clear()
+{
+    for(int i=0;i<this->tablesize;i++){
+        free(this->vlist[i]);
+        this->vlist[i]=NULL;
+    }
+    free(this->elist);
+    this->elist=NULL;
+    switch_num=0;
+    host_num=0;
+    std::cout << "******************************************" << std::endl;
+    std::cout << "Clear all virtual devices in fake-mininet." << std::endl;
+    std::cout << "******************************************" << std::endl;
 }

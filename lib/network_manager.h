@@ -4,6 +4,8 @@
 #include <iostream>
 
 #include "vertex.h"
+#include "switch.h"
+#include "host.h"
 #include "edge.h"
 #include "hash.h"
 
@@ -26,6 +28,21 @@ public:
     // switch/host name (auto increment)
     std::string get_sw_name();
     std::string get_h_name();
+    // clear
+    void clear();
+
+    // For API
+    int add_switch(std::string name);
+    int add_switch();   // using get_sw_name method
+    Switch *create_switch();
+    Switch *create_switch(std::string);
+    int add_host(std::string name);
+    int add_host();
+    Host *create_host();
+    Host *create_host(std::string);
+    void linkup(Vertex *head, Vertex *tail);
+    void linkdown(Vertex *head, Vertex *tail);
+
     // member 
     Vertex **vlist;
     Edge *elist;

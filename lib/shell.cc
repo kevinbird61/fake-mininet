@@ -10,21 +10,40 @@ int sh_loop()
     // variables
     vector<string> args;
     int status=0;
-
+    string raw;
     // loop first
     do {
         cout << "fakeCLI@cyu> ";
-        args = sh_readline();
+        getline(std::cin, raw);
+        args = sh_readline(raw);
         status = sh_execute(args);
     } while(status);
 }
 
-vector<string> sh_readline()
+int sh_interpret(string filename)
 {
-    string raw,tmp;
+    string raw;
+    ifstream fin(filename);
+    vector<string> args;
+    int status=0;
+
+    // read 
+    if(fin.is_open()){
+        while(getline(fin, raw)){
+            args = sh_readline(raw);
+            status = sh_execute(args);
+        }
+    } else {
+        cout << "Illegal input command file." << endl;
+    }
+
+    return 0;
+}
+
+vector<string> sh_readline(string raw)
+{
+    string tmp;
     vector<string> args_token;
-    // get oneline 
-    getline(std::cin, raw);
     // split into several token
     stringstream ssin(raw);
     while(ssin.good()){
@@ -151,6 +170,11 @@ int sh_execute(vector<string> args)
         nm.print_all_v();
         return 1;
     }
+    else if(args.at(0)=="clear"){
+        // clear and reset
+        nm.clear();
+        return 1;
+    }
     else if(args.at(0)=="debug"){
         // print all vertices
         nm.print_all_v();
@@ -196,6 +220,7 @@ void print_help(){
         << "-----------------------------------------------------------------------------------------" << "\n"
         << " \033[1;31m help \033[0m: print this helping message, to illustrate user how to use our service." << "\n" 
         << " \033[1;31m exit \033[0m: close this fake CLI elegantly." << "\n"
+        << " \033[1;31m clear \033[0m: clear and reset the network status (like `mn -c`)." << "\n"
         << " \033[1;31m debug \033[0m: show the current status of network manager." << "\n"
         << "-----------------------------------------------------------------------------------------" << "\n"
         << " \033[1;36m create\033[0m \033[33m[host|switch]\033[0m \033[92m<device name>\033[0m: create virtual device." << "\n"

@@ -21,4 +21,5 @@
 | :--- | :--- | ---: |
 | `help` | print the helper message. | |
 | `exit` | close this fake CLI elegantly. | |
+| `clear` | clear and reset the network status (like `mn -c`). | |
 | `debug` | show the current status of network manager. | |

@@ -1,5 +1,6 @@
 EXEC:=mn
 OBJS:=shell.o switch.o host.o edge.o gplot.o hash.o nm.o
+STATIC:=libfakemn.a
 CXXFLAGS:= -std=c++11
 
 all: $(EXEC)
@@ -24,6 +25,11 @@ gplot.o: lib/gplot.cc
 nm.o: lib/network_manager.cc 
 	g++ -c $^ -o $@ $(CXXFLAGS)
 
+# static library
+lib: $(OBJS)
+	ar cr $(STATIC) $(OBJS)
+	ranlib $(STATIC)
+
 # reset & clean
 clean: 
-	rm -rf $(OBJS) $(EXEC)
+	rm -rf $(OBJS) $(EXEC) $(STATIC)
