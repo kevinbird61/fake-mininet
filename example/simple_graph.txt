@@ -1,9 +1,23 @@
-c h h1
-c h h2
-c sw s1
-link s1 h1 up
-link s1 h2 up
-link h1 s1 up
+c h s
+c h t
+c sw u
+c sw v
+c sw x 
+c sw y
+link s u up
+link s x up
+link u v up
+link x y up
+link v t up
+link v x up
+link y t up
+net
+sl s x val 0
+sl u v cap 1
+sl v x cap 1
+sl x y cap 1
+sl v t val 0
+net
 plot
 export example/simple_graph
 exit

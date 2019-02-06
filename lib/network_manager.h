@@ -17,14 +17,21 @@ public:
     // print 
     void print_all_v(); // all vertices
     void print_all_e(); // all edges
-    // link 2 vertex 
+    // between 2 vertex 
     void connect(std::string hname, std::string tname);
     void disconnect(std::string hname, std::string tname);
-    int check_status(std::string hname, std::string tname);
+    int connected(std::string hname, std::string tname);
+    // setlink 
+    void setlink(std::string hname, std::string tname, int mode, unsigned int val);
+    // switch/host name (auto increment)
+    std::string get_sw_name();
+    std::string get_h_name();
     // member 
     Vertex **vlist;
     Edge *elist;
     int tablesize;
+    int switch_num;
+    int host_num;
 };
 
 #endif 

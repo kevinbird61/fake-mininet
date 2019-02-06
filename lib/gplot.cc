@@ -21,7 +21,7 @@ int Gplot::gp_add(Edge *elist)
         // add the node into this->body
         this->body += (trav->head->name)+" [label=\""+ trav->head->name + "(" + trav->head->type + ")\"];\n";
         this->body += (trav->tail->name)+" [label=\""+ trav->tail->name + "(" + trav->tail->type + ")\"];\n";
-        this->body += (trav->head->name + "->" + trav->tail->name + ";\n");
+        this->body += (trav->head->name + "->" + trav->tail->name + "[label=\"(" + std::to_string(trav->flowval) + ") " + std::to_string(trav->cap) + "\"];\n");
         trav=trav->next;
     }
 }

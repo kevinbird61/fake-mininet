@@ -1,6 +1,8 @@
 #include "edge.h"
 
-Edge::Edge(){
+Edge::Edge()
+    :cap(2),flowval(1)
+{
     this->next = NULL;
 }
 

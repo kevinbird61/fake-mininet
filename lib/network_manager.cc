@@ -1,9 +1,8 @@
 #include "network_manager.h"
 
 NetworkManager::NetworkManager()
+    :tablesize(10), switch_num(0), host_num(0)
 {
-    // init (default: 10)
-    this->tablesize=10;
     this->vlist = (Vertex**)malloc(this->tablesize*sizeof(Vertex *));
     for(int i=0;i<this->tablesize;i++){
         this->vlist[i]=NULL;
@@ -12,6 +11,7 @@ NetworkManager::NetworkManager()
 }
 
 NetworkManager::NetworkManager(int tablesize)
+    :switch_num(0), host_num(0)
 {
     // init 
     this->tablesize = tablesize;
@@ -97,7 +97,7 @@ void NetworkManager::print_all_e(){
     std::cout<< "======================================================" << std::endl;
     Edge *traversal = this->elist;
     while(traversal!=NULL){
-        std::cout << traversal->head->name << "(" << traversal->head->type << ") <-> " << traversal->tail->name << "(" << traversal->tail->type << ")" << std::endl;
+        std::cout << traversal->head->name << "(" << traversal->head->type << ") <--[cap:"<< traversal->cap << "|val:" << traversal->flowval <<"]--> " << traversal->tail->name << "(" << traversal->tail->type << ")" << std::endl;
         traversal=traversal->next;
     }
 }
@@ -187,7 +187,59 @@ void NetworkManager::disconnect(std::string hname, std::string tname){
     std::cout << "Not found the connection between `" << hname << "` and `" << tname << "`. You can use `net` or `debug` to check the current status." << std::endl;
 }
 
-int NetworkManager::check_status(std::string hname, std::string tname){
+void NetworkManager::setlink(std::string hname, std::string tname, int mode, unsigned int val){
+    // check if hname(head) and tname(tail) existed or not
+    unsigned int index = djb2(hname.c_str())%this->tablesize;
+    Vertex *head, *tail;
+    Vertex *check = this->vlist[index];
+    int cnt=0;
+    while(check!=NULL){
+        if(check->name == hname){
+            head=check;
+            cnt++;
+            break;
+        }
+    }
+    index = djb2(tname.c_str())%this->tablesize;
+    check = this->vlist[index];
+    while(check!=NULL){
+        if(check->name == tname){
+            tail=check;
+            cnt++;
+            break;
+        }
+    }
+
+    if(cnt != 2){
+        std::cout << "Illegal name of vertex, please using print/debug command to check current topo." << std::endl;
+        return;
+    }
+
+    // check all edges
+    Edge *traversal = this->elist;
+    if(traversal!=NULL){
+        while(traversal->next!=NULL){
+            if((traversal->head->name==hname && traversal->tail->name==tname)){
+                // setlink 
+                if(mode==0){
+                    traversal->cap=val;
+                    std::cout << "Set the capacity of link `" << hname << "` with `" << tname << "` to " << val << " successfully." << std::endl;
+                } else if(mode==1){
+                    traversal->flowval=val;
+                    std::cout << "Set the flow value of link `" << hname << "` with `" << tname << "` to " << val << " successfully." << std::endl;
+                } else {
+                    std::cout << "Not support this link mode yet." << std::endl;
+                }
+                return ;
+            }
+            traversal=traversal->next;
+        }
+    }
+}
+
+
+
+int NetworkManager::connected(std::string hname, std::string tname){
     // check if hname(head) and tname(tail) existed or not
     unsigned int index = djb2(hname.c_str())%this->tablesize;
     Vertex *head, *tail;
@@ -227,4 +279,14 @@ int NetworkManager::check_status(std::string hname, std::string tname){
         }
     }
     return 1;
+}
+
+std::string NetworkManager::get_sw_name()
+{
+    return std::string("s"+std::to_string(this->switch_num++));
+}
+
+std::string NetworkManager::get_h_name()
+{
+    return std::string("h"+std::to_string(this->host_num++));
 }

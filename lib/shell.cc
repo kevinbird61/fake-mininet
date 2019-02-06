@@ -47,7 +47,7 @@ int sh_execute(vector<string> args)
     }
     else if(args.at(0)=="create"||args.at(0)=="c"){
         // create 
-        if(args.size() > 2){
+        if(args.size() >= 2){
             // create - switch 
             if(args.at(1)=="switch" || args.at(1)=="sw"){
                 Switch *sw;
@@ -56,8 +56,9 @@ int sh_execute(vector<string> args)
                     // specify name by user
                     sw->set_name(args.at(2));
                 } else {
-                    // TODO: set by NetworkManager 
+                    // set by NetworkManager 
                     //  - will have an automatically increase number, like s1,s2,s3 ...
+                    sw->set_name(nm.get_sw_name());
                 }
 
                 if(!nm.add_vertex(sw)){
@@ -73,8 +74,9 @@ int sh_execute(vector<string> args)
                     // specify name by user
                     h->set_name(args.at(2));
                 } else {
-                    // TODO: set by NetworkManager 
+                    // set by NetworkManager 
                     //  - will have an automatically increase number, like h1,h2,h3 ...
+                    h->set_name(nm.get_h_name());
                 }
 
                 if(!nm.add_vertex(h)){
@@ -93,7 +95,7 @@ int sh_execute(vector<string> args)
         }
         return 1;
     }
-    else if(args.at(0)=="link"){
+    else if(args.at(0)=="link"||args.at(0)=="l"){
         // link
         if(args.size() >= 4){
             // find two node in network manager
@@ -111,11 +113,28 @@ int sh_execute(vector<string> args)
         }
         return 1;
     }
+    else if(args.at(0)=="setlink" || args.at(0)=="sl"){
+        // `setlink v1 v2 cap #`
+        // `setlink v1 v2 val #`
+        if(args.size()>=4){
+            if(args.at(3)=="cap"||args.at(3)=="c"){
+                // setlink capacity
+                nm.setlink(args.at(1), args.at(2), 0, stoi(args.at(4)));
+            } else if(args.at(3)=="val"||args.at(3)=="v"){
+                // setlink flowval
+                nm.setlink(args.at(1), args.at(2), 1, stoi(args.at(4)));
+            }
+        } else {
+            cout << "Please comply with the `setlink` command, like `setlink s1 s2 cap 10` or `link h1 s2 val 5` ... etc. Type `help` command to see more." << endl;
+        }
+
+        return 1;
+    }
     else if(args.size() >= 3){
         if(args.at(1)=="ping"){
             // A ping B
             // check edges 
-            if(!nm.check_status(args.at(0), args.at(2))){
+            if(!nm.connected(args.at(0), args.at(2))){
                 cout << "Connected: " << args[0] << " is connected with " << args[2] << endl;
             } else {
                 cout << "Disconnected." << endl;
@@ -182,6 +201,7 @@ void print_help(){
         << " \033[1;36m create\033[0m \033[33m[host|switch]\033[0m \033[92m<device name>\033[0m: create virtual device." << "\n"
         << " \033[1;36m link\033[0m \033[92m<device #1> <device #2>\033[0m \033[33m[up|down]\033[0m: connect/disconnect 2 virtual devices." << "\n"
         << " \033[92m <device #1>\033[0m \033[1;36mping\033[0m \033[92m<device #2>\033[0m: check whether those devices are connected or not." << "\n"
+        << " \033[1;36m setlink\033[0m \033[92m<device #1> <device #2>\033[0m \033[33m[cap|val]\033[0m \033[92m<value>\033[0m: set the capacity/flow value of the link between 2 specified vertices." << "\n"
         << " \033[1;36m net \033[0m: display links." << "\n"
         << " \033[1;36m nodes \033[0m: display nodes (switch, host)." << "\n"
         << " \033[1;36m plot \033[0m: show the current content of topology. (in dotfile format) " << "\n"

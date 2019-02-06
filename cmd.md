@@ -6,7 +6,8 @@
 | :--- | :--- | :--- |
 | `create host <name>` | create a virtual host. | `c h <name>` |
 | `create switch <name>` | create a virtual switch. | `c sw <name>` |
-| `link <name #1> <name #2> [up\|down]` | connect/disconnect a virtual link between 2 points. | |
+| `link <name #1> <name #2> [up\|down]` | connect/disconnect a virtual link between 2 points. | `l <name #1> <name #2> [up\|down]` |
+| `setlink <name #1> <name #2> [cap\|val] <value>` | set the capacity/flow value of the link between 2 specified vertices. | `sl <#1> <#2> [c\|v] <value>` |
 | `<name #1> ping <name #2>` | if link is set, then ping will success | |
 | `net` | display links | |
 | `nodes` | display nodes (switch, host) | |
