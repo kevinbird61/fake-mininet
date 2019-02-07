@@ -16,6 +16,14 @@ int main(int argc, char** argv){
     // then create link (also add nodes into network manager)
     nm->linkup(s1, h1);
     nm->linkup(s1, h2); // because linkup will add each node pass through the parameters, so this method will cause a warning message, but won't effect the correctness
+    // get all nodes
+    nm->print_all_v();
+    Vertex *list = nm->get_all_nodes();
+    while(list!=NULL){
+        std::cout << list->name << std::endl;
+        list=list->next;
+    }
+    nm->print_all_v();
     // reset
     nm->clear();
 

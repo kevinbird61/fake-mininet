@@ -296,6 +296,40 @@ void NetworkManager::linkdown(Vertex *head, Vertex *tail)
     std::cout << "Not found the connection between `" << head->name << "` and `" << tail->name << "`. You can use `net` or `debug` to check the current status." << std::endl;
 }
 
+Vertex *NetworkManager::get_all_nodes()
+{
+    Vertex *rlist=NULL, *tmp;
+
+    for(int i=0;i<this->tablesize;i++){
+        Vertex *header = this->vlist[i];
+        while(header!=NULL){
+            if(rlist==NULL){
+                if(header->type==std::string("switch")){
+                    rlist = new Switch((Switch *)header);
+                } else if(header->type==std::string("host")){
+                    rlist = new Host((Host *)header);
+                }
+                tmp=rlist;
+            } else {
+                if(header->type==std::string("switch")){
+                    tmp->next = new Switch((Switch *)header);
+                } else if(header->type==std::string("host")){
+                    tmp->next = new Host((Host *)header);
+                }
+                tmp=tmp->next;
+            }
+            header=header->next;
+        }
+    }
+
+    return rlist;
+}
+
+Vertex *NetworkManager::get_node(std::string name)
+{
+    
+}
+
 void NetworkManager::setlink(std::string hname, std::string tname, int mode, unsigned int val){
     // check if hname(head) and tname(tail) existed or not
     unsigned int index = djb2(hname.c_str())%this->tablesize;
@@ -345,8 +379,6 @@ void NetworkManager::setlink(std::string hname, std::string tname, int mode, uns
         }
     }
 }
-
-
 
 int NetworkManager::connected(std::string hname, std::string tname){
     // check if hname(head) and tname(tail) existed or not

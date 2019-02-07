@@ -5,8 +5,15 @@ Switch::Switch(){
     this->next = NULL;
 }
 
+Switch::Switch(Switch *sw){
+    this->name = sw->name;
+    this->type = std::string("switch");
+    this->next = NULL;
+}
+
 Switch::Switch(std::string name){
     this->name = name;
+    this->type = std::string("switch");
     this->next = NULL;
 }
 

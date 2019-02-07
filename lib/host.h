@@ -6,6 +6,7 @@
 class Host: public Vertex{
 public:
     Host();
+    Host(Host *h);
     Host(std::string name);
     ~Host();
     void set_name(std::string name);

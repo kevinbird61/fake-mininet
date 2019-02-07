@@ -42,6 +42,8 @@ public:
     Host *create_host(std::string);
     void linkup(Vertex *head, Vertex *tail);
     void linkdown(Vertex *head, Vertex *tail);
+    Vertex *get_all_nodes();
+    Vertex *get_node(std::string name);
 
     // member 
     Vertex **vlist;

@@ -5,6 +5,12 @@ Host::Host(){
     this->next = NULL;
 }
 
+Host::Host(Host *h){
+    this->name = h->name;
+    this->type = std::string("host"); 
+    this->next = NULL;
+}
+
 Host::Host(std::string name){
     this->name = name;
     this->type = std::string("host"); 
