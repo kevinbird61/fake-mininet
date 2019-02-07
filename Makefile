@@ -1,5 +1,5 @@
 EXEC:=mn
-OBJS:=shell.o switch.o host.o edge.o gplot.o hash.o nm.o
+OBJS:=shell.o switch.o host.o edge.o gplot.o hash.o nm.o path.o
 STATIC:=libfakemn.a
 CXXFLAGS:= -std=c++11
 
@@ -23,6 +23,8 @@ edge.o: lib/edge.cc
 gplot.o: lib/gplot.cc
 	g++ -c $^ -o $@ $(CXXFLAGS)
 nm.o: lib/network_manager.cc 
+	g++ -c $^ -o $@ $(CXXFLAGS)
+path.o: lib/path.cc 
 	g++ -c $^ -o $@ $(CXXFLAGS)
 
 # static library

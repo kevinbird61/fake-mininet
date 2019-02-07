@@ -331,7 +331,23 @@ Vertex *NetworkManager::get_all_nodes()
 
 Vertex *NetworkManager::get_node(std::string name)
 {
+    Vertex *rnode=NULL;
 
+    unsigned int index=djb2(name.c_str())%this->tablesize;
+    Vertex *header = this->vlist[index];
+    while(header!=NULL) {
+        if(header->name == name) {
+            if(header->type==std::string("switch")) {
+                rnode = new Switch((Switch *)header);
+            } else if(header->type==std::string("host")) {
+                rnode = new Host((Host *)header);
+            }
+            return rnode;
+        }
+        header=header->next;
+    }
+
+    return NULL;
 }
 
 void NetworkManager::setlink(std::string hname, std::string tname, int mode, unsigned int val)
