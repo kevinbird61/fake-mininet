@@ -22,6 +22,10 @@ int main(int argc, char** argv){
     nm->connect(std::string("v"), std::string("t"));
     nm->connect(std::string("x"), std::string("y"));
     nm->connect(std::string("y"), std::string("t"));
+    // get the edge info by 2 vertices
+    Edge *e = nm->get_edge(std::string("s"), std::string("u"));
+    std::cout << "Edge `s<->u`=> [cap:" << e->cap << ", val:" << e->flowval << "]" << std::endl;
+    // print current status
     nm->print_all_e();
 
     // create path
@@ -30,7 +34,7 @@ int main(int argc, char** argv){
     // create tree from edge list
     path->append(nm->elist);
     // find paths (will return std::vector<std::vector<Node *>> object)
-    path->find_paths(std::string("s"), std::string("t"));
+    std::vector<std::vector<Node *>> avail_paths = path->find_paths(std::string("s"), std::string("t"));
     // debug (show the paths found between 2 vertices that user specified)
     path->debug();
 

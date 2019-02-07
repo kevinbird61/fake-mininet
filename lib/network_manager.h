@@ -45,6 +45,8 @@ public:
     void linkdown(Vertex *head, Vertex *tail);
     Vertex *get_all_nodes();
     Vertex *get_node(std::string name);
+    Edge *get_edge(Vertex *head, Vertex *tail);
+    Edge *get_edge(std::string hname, std::string tname);
 
     // member
     Vertex **vlist;

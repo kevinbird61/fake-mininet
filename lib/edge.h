@@ -7,6 +7,7 @@ class Edge
 {
 public:
     Edge();
+    Edge(Edge *e);
     ~Edge();
     void link(Vertex *head, Vertex *tail);
     void set_cap(unsigned int cap);

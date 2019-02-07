@@ -350,6 +350,30 @@ Vertex *NetworkManager::get_node(std::string name)
     return NULL;
 }
 
+Edge *NetworkManager::get_edge(Vertex *head, Vertex *tail)
+{
+    Edge *trav = this->elist;
+    while(trav!=NULL){
+        if((trav->head->name==head->name)&&(trav->tail->name==tail->name)){
+            return new Edge(trav);
+        }
+        trav=trav->next;
+    }
+    return NULL;
+}
+
+Edge *NetworkManager::get_edge(std::string hname, std::string tname)
+{
+    Edge *trav = this->elist;
+    while(trav!=NULL){
+        if((trav->head->name==hname)&&(trav->tail->name==tname)){
+            return new Edge(trav);
+        }
+        trav=trav->next;
+    }
+    return NULL;
+}
+
 void NetworkManager::setlink(std::string hname, std::string tname, int mode, unsigned int val)
 {
     // check if hname(head) and tname(tail) existed or not
