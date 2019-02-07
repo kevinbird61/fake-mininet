@@ -3,8 +3,9 @@
 
 #include "vertex.h"
 
-class Switch: public Vertex{
-public: 
+class Switch: public Vertex
+{
+public:
     Switch();
     Switch(Switch *sw);
     Switch(std::string name);

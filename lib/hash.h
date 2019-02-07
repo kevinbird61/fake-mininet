@@ -4,4 +4,4 @@
 unsigned int djb2(const char *str);
 unsigned int jenkins(const char *str);
 
-#endif 
+#endif

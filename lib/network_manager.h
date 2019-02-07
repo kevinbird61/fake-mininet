@@ -9,21 +9,22 @@
 #include "edge.h"
 #include "hash.h"
 
-class NetworkManager {
+class NetworkManager
+{
 public:
     NetworkManager();
     NetworkManager(int tablesize);
     ~NetworkManager();
     int add_vertex(Vertex *v);
     void add_edge(Edge *e);
-    // print 
+    // print
     void print_all_v(); // all vertices
     void print_all_e(); // all edges
-    // between 2 vertex 
+    // between 2 vertex
     void connect(std::string hname, std::string tname);
     void disconnect(std::string hname, std::string tname);
     int connected(std::string hname, std::string tname);
-    // setlink 
+    // setlink
     void setlink(std::string hname, std::string tname, int mode, unsigned int val);
     // switch/host name (auto increment)
     std::string get_sw_name();
@@ -45,7 +46,7 @@ public:
     Vertex *get_all_nodes();
     Vertex *get_node(std::string name);
 
-    // member 
+    // member
     Vertex **vlist;
     Edge *elist;
     int tablesize;
@@ -53,4 +54,4 @@ public:
     int host_num;
 };
 
-#endif 
+#endif

@@ -4,7 +4,7 @@ NetworkManager::NetworkManager()
     :tablesize(10), switch_num(0), host_num(0)
 {
     this->vlist = (Vertex**)malloc(this->tablesize*sizeof(Vertex *));
-    for(int i=0;i<this->tablesize;i++){
+    for(int i=0; i<this->tablesize; i++) {
         this->vlist[i]=NULL;
     }
     this->elist=NULL;
@@ -13,10 +13,10 @@ NetworkManager::NetworkManager()
 NetworkManager::NetworkManager(int tablesize)
     :switch_num(0), host_num(0)
 {
-    // init 
+    // init
     this->tablesize = tablesize;
     this->vlist = (Vertex**)malloc(tablesize*sizeof(Vertex *));
-    for(int i=0;i<this->tablesize;i++){
+    for(int i=0; i<this->tablesize; i++) {
         this->vlist[i]=NULL;
     }
     this->elist=NULL;
@@ -35,19 +35,19 @@ int NetworkManager::add_vertex(Vertex *v)
     unsigned int index = djb2(v->name.c_str())%this->tablesize;
     Vertex *insert = this->vlist[index];
 
-    if(insert==NULL){
+    if(insert==NULL) {
         this->vlist[index]=v;
         this->vlist[index]->next=NULL;
         // std::cout << "Name:" << this->vlist[djb2(v->name.c_str())%this->tablesize]->name << std::endl;
     } else {
-        // check 
-        if(insert->name==v->name){
+        // check
+        if(insert->name==v->name) {
             std::cout << "Duplicated device name. Cancel insert process." << std::endl;
             return 1;
         }
-        while(insert->next!=NULL){
+        while(insert->next!=NULL) {
             // check
-            if(insert->name==v->name){
+            if(insert->name==v->name) {
                 std::cout << "Duplicated device name. Cancel insert process." << std::endl;
                 return 1;
             }
@@ -111,26 +111,27 @@ Host *NetworkManager::create_host(std::string name)
 void NetworkManager::add_edge(Edge *e)
 {
     Edge *insert = this->elist;
-    if(insert==NULL){
+    if(insert==NULL) {
         this->elist = e;
     } else {
-        while(insert->next!=NULL){
+        while(insert->next!=NULL) {
             insert=insert->next;
         }
         insert->next=e;
     }
 }
 
-void NetworkManager::print_all_v(){
+void NetworkManager::print_all_v()
+{
     std::cout<< "======================================================" << std::endl;
     std::cout<< "Print all vertices:" << std::endl;
     std::cout<< "======================================================" << std::endl;
-    for(int i=0;i<this->tablesize;i++){
+    for(int i=0; i<this->tablesize; i++) {
         Vertex *header = this->vlist[i];
         std::cout << "VList[" << i << "]: ";
-        if(header!=NULL){
+        if(header!=NULL) {
             std::cout << header->name << "(" << header->type << ")";
-            while(header->next!=NULL){
+            while(header->next!=NULL) {
                 header=header->next;
                 std::cout << ", " << header->name << "(" << header->type << ")";
             }
@@ -139,25 +140,27 @@ void NetworkManager::print_all_v(){
     }
 }
 
-void NetworkManager::print_all_e(){
+void NetworkManager::print_all_e()
+{
     std::cout<< "======================================================" << std::endl;
     std::cout<< "Print all edges:" << std::endl;
     std::cout<< "======================================================" << std::endl;
     Edge *traversal = this->elist;
-    while(traversal!=NULL){
+    while(traversal!=NULL) {
         std::cout << traversal->head->name << "(" << traversal->head->type << ") <--[cap:"<< traversal->cap << "|val:" << traversal->flowval <<"]--> " << traversal->tail->name << "(" << traversal->tail->type << ")" << std::endl;
         traversal=traversal->next;
     }
 }
 
-void NetworkManager::connect(std::string hname, std::string tname){
+void NetworkManager::connect(std::string hname, std::string tname)
+{
     // check if hname(head) and tname(tail) existed or not
     unsigned int index = djb2(hname.c_str())%this->tablesize;
     Vertex *head, *tail;
     Vertex *check = this->vlist[index];
     int cnt=0;
-    while(check!=NULL){
-        if(check->name == hname){
+    while(check!=NULL) {
+        if(check->name == hname) {
             head=check;
             cnt++;
             break;
@@ -165,15 +168,15 @@ void NetworkManager::connect(std::string hname, std::string tname){
     }
     index = djb2(tname.c_str())%this->tablesize;
     check = this->vlist[index];
-    while(check!=NULL){
-        if(check->name == tname){
+    while(check!=NULL) {
+        if(check->name == tname) {
             tail=check;
             cnt++;
             break;
         }
     }
 
-    if(cnt != 2){
+    if(cnt != 2) {
         std::cout << "Illegal name of vertex, please using print/debug command to check current topo." << std::endl;
         return;
     }
@@ -204,14 +207,15 @@ void NetworkManager::linkup(Vertex *head, Vertex *tail)
     std::cout << "Connect `" << head->name << "` with `" << tail->name << "` successfully." << std::endl;
 }
 
-void NetworkManager::disconnect(std::string hname, std::string tname){
+void NetworkManager::disconnect(std::string hname, std::string tname)
+{
     // check if hname(head) and tname(tail) existed or not
     unsigned int index = djb2(hname.c_str())%this->tablesize;
     Vertex *head, *tail;
     Vertex *check = this->vlist[index];
     int cnt=0;
-    while(check!=NULL){
-        if(check->name == hname){
+    while(check!=NULL) {
+        if(check->name == hname) {
             head=check;
             cnt++;
             break;
@@ -219,25 +223,25 @@ void NetworkManager::disconnect(std::string hname, std::string tname){
     }
     index = djb2(tname.c_str())%this->tablesize;
     check = this->vlist[index];
-    while(check!=NULL){
-        if(check->name == tname){
+    while(check!=NULL) {
+        if(check->name == tname) {
             tail=check;
             cnt++;
             break;
         }
     }
 
-    if(cnt != 2){
+    if(cnt != 2) {
         std::cout << "Illegal name of vertex, please using print/debug command to check current topo." << std::endl;
         return;
     }
 
     // find edge, and then destroy
     Edge *traversal=this->elist,*prev=this->elist;
-    while(traversal!=NULL){
-        if(traversal->head->name==hname && traversal->tail->name==tname){
+    while(traversal!=NULL) {
+        if(traversal->head->name==hname && traversal->tail->name==tname) {
             std::cout << "Disconnect `" << hname << "` with `" << tname << "` successfully." << std::endl;
-            if(prev==this->elist){
+            if(prev==this->elist) {
                 this->elist=this->elist->next;
             } else {
                 prev->next=traversal->next;
@@ -257,32 +261,32 @@ void NetworkManager::linkdown(Vertex *head, Vertex *tail)
     unsigned int index = djb2(head->name.c_str())%this->tablesize;
     Vertex *check = this->vlist[index];
     int cnt=0;
-    while(check!=NULL){
-        if(check->name == head->name){
+    while(check!=NULL) {
+        if(check->name == head->name) {
             cnt++;
             break;
         }
     }
     index = djb2(tail->name.c_str())%this->tablesize;
     check = this->vlist[index];
-    while(check!=NULL){
-        if(check->name == tail->name){
+    while(check!=NULL) {
+        if(check->name == tail->name) {
             cnt++;
             break;
         }
     }
 
-    if(cnt != 2){
+    if(cnt != 2) {
         std::cout << "Illegal name of vertex, please using print/debug command to check current topo." << std::endl;
         return;
     }
 
     // find edge, and then destroy
     Edge *traversal=this->elist,*prev=this->elist;
-    while(traversal!=NULL){
-        if(traversal->head->name==head->name && traversal->tail->name==tail->name){
+    while(traversal!=NULL) {
+        if(traversal->head->name==head->name && traversal->tail->name==tail->name) {
             std::cout << "Disconnect `" << head->name << "` with `" << tail->name << "` successfully." << std::endl;
-            if(prev==this->elist){
+            if(prev==this->elist) {
                 this->elist=this->elist->next;
             } else {
                 prev->next=traversal->next;
@@ -300,20 +304,20 @@ Vertex *NetworkManager::get_all_nodes()
 {
     Vertex *rlist=NULL, *tmp;
 
-    for(int i=0;i<this->tablesize;i++){
+    for(int i=0; i<this->tablesize; i++) {
         Vertex *header = this->vlist[i];
-        while(header!=NULL){
-            if(rlist==NULL){
-                if(header->type==std::string("switch")){
+        while(header!=NULL) {
+            if(rlist==NULL) {
+                if(header->type==std::string("switch")) {
                     rlist = new Switch((Switch *)header);
-                } else if(header->type==std::string("host")){
+                } else if(header->type==std::string("host")) {
                     rlist = new Host((Host *)header);
                 }
                 tmp=rlist;
             } else {
-                if(header->type==std::string("switch")){
+                if(header->type==std::string("switch")) {
                     tmp->next = new Switch((Switch *)header);
-                } else if(header->type==std::string("host")){
+                } else if(header->type==std::string("host")) {
                     tmp->next = new Host((Host *)header);
                 }
                 tmp=tmp->next;
@@ -327,17 +331,18 @@ Vertex *NetworkManager::get_all_nodes()
 
 Vertex *NetworkManager::get_node(std::string name)
 {
-    
+
 }
 
-void NetworkManager::setlink(std::string hname, std::string tname, int mode, unsigned int val){
+void NetworkManager::setlink(std::string hname, std::string tname, int mode, unsigned int val)
+{
     // check if hname(head) and tname(tail) existed or not
     unsigned int index = djb2(hname.c_str())%this->tablesize;
     Vertex *head, *tail;
     Vertex *check = this->vlist[index];
     int cnt=0;
-    while(check!=NULL){
-        if(check->name == hname){
+    while(check!=NULL) {
+        if(check->name == hname) {
             head=check;
             cnt++;
             break;
@@ -345,29 +350,29 @@ void NetworkManager::setlink(std::string hname, std::string tname, int mode, uns
     }
     index = djb2(tname.c_str())%this->tablesize;
     check = this->vlist[index];
-    while(check!=NULL){
-        if(check->name == tname){
+    while(check!=NULL) {
+        if(check->name == tname) {
             tail=check;
             cnt++;
             break;
         }
     }
 
-    if(cnt != 2){
+    if(cnt != 2) {
         std::cout << "Illegal name of vertex, please using print/debug command to check current topo." << std::endl;
         return;
     }
 
     // check all edges
     Edge *traversal = this->elist;
-    if(traversal!=NULL){
-        while(traversal->next!=NULL){
-            if((traversal->head->name==hname && traversal->tail->name==tname)){
-                // setlink 
-                if(mode==0){
+    if(traversal!=NULL) {
+        while(traversal->next!=NULL) {
+            if((traversal->head->name==hname && traversal->tail->name==tname)) {
+                // setlink
+                if(mode==0) {
                     traversal->cap=val;
                     std::cout << "Set the capacity of link `" << hname << "` with `" << tname << "` to " << val << " successfully." << std::endl;
-                } else if(mode==1){
+                } else if(mode==1) {
                     traversal->flowval=val;
                     std::cout << "Set the flow value of link `" << hname << "` with `" << tname << "` to " << val << " successfully." << std::endl;
                 } else {
@@ -380,14 +385,15 @@ void NetworkManager::setlink(std::string hname, std::string tname, int mode, uns
     }
 }
 
-int NetworkManager::connected(std::string hname, std::string tname){
+int NetworkManager::connected(std::string hname, std::string tname)
+{
     // check if hname(head) and tname(tail) existed or not
     unsigned int index = djb2(hname.c_str())%this->tablesize;
     Vertex *head, *tail;
     Vertex *check = this->vlist[index];
     int cnt=0;
-    while(check!=NULL){
-        if(check->name == hname){
+    while(check!=NULL) {
+        if(check->name == hname) {
             head=check;
             cnt++;
             break;
@@ -395,27 +401,27 @@ int NetworkManager::connected(std::string hname, std::string tname){
     }
     index = djb2(tname.c_str())%this->tablesize;
     check = this->vlist[index];
-    while(check!=NULL){
-        if(check->name == tname){
+    while(check!=NULL) {
+        if(check->name == tname) {
             tail=check;
             cnt++;
             break;
         }
     }
 
-    if(cnt != 2){
+    if(cnt != 2) {
         std::cout << "Illegal name of vertex, please using print/debug command to check current topo." << std::endl;
         return 1;
     }
 
     // check all edges
     Edge *traversal = this->elist;
-    if(traversal!=NULL){
-        if((traversal->head->name==hname && traversal->tail->name==tname)||(traversal->head->name==tname && traversal->tail->name==hname)){
-            // find 
+    if(traversal!=NULL) {
+        if((traversal->head->name==hname && traversal->tail->name==tname)||(traversal->head->name==tname && traversal->tail->name==hname)) {
+            // find
             return 0;
         }
-        while(traversal->next!=NULL){
+        while(traversal->next!=NULL) {
             traversal=traversal->next;
         }
     }
@@ -434,7 +440,7 @@ std::string NetworkManager::get_h_name()
 
 void NetworkManager::clear()
 {
-    for(int i=0;i<this->tablesize;i++){
+    for(int i=0; i<this->tablesize; i++) {
         free(this->vlist[i]);
         this->vlist[i]=NULL;
     }

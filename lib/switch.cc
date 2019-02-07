@@ -1,30 +1,36 @@
 #include "switch.h"
 
-Switch::Switch(){
+Switch::Switch()
+{
     this->type = std::string("switch");
     this->next = NULL;
 }
 
-Switch::Switch(Switch *sw){
+Switch::Switch(Switch *sw)
+{
     this->name = sw->name;
     this->type = std::string("switch");
     this->next = NULL;
 }
 
-Switch::Switch(std::string name){
+Switch::Switch(std::string name)
+{
     this->name = name;
     this->type = std::string("switch");
     this->next = NULL;
 }
 
-Switch::~Switch(){
+Switch::~Switch()
+{
 
 }
 
-void Switch::set_name(std::string name){
+void Switch::set_name(std::string name)
+{
     this->name = name;
 }
 
-std::string Switch::get_name(){
+std::string Switch::get_name()
+{
     return this->name;
 }

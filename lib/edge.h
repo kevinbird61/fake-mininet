@@ -3,7 +3,8 @@
 
 #include "vertex.h"
 
-class Edge {
+class Edge
+{
 public:
     Edge();
     ~Edge();

@@ -6,9 +6,10 @@
 #include "vertex.h"
 #include "edge.h"
 
-class Gplot{
+class Gplot
+{
 public:
-    Gplot();       
+    Gplot();
     ~Gplot();
     int gp_add(Edge *e);           // add new branch into Gplot::dotfile
     std::string gp_dump(bool flag);// if true, using digraph; otherwise using normal graph
@@ -19,4 +20,4 @@ private:
     std::string body;
 };
 
-#endif 
+#endif

@@ -6,9 +6,10 @@ Edge::Edge()
     this->next = NULL;
 }
 
-Edge::~Edge(){}
+Edge::~Edge() {}
 
-void Edge::link(Vertex *head, Vertex *tail){
+void Edge::link(Vertex *head, Vertex *tail)
+{
     this->head = head;
     this->tail = tail;
 }

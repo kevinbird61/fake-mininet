@@ -3,7 +3,8 @@
 
 #include "vertex.h"
 
-class Host: public Vertex{
+class Host: public Vertex
+{
 public:
     Host();
     Host(Host *h);
@@ -13,4 +14,4 @@ public:
     std::string get_name();
 };
 
-#endif 
+#endif

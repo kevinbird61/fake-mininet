@@ -3,7 +3,8 @@
 
 #include <string>
 
-class Vertex {
+class Vertex
+{
 public:
     std::string name;
     std::string type;

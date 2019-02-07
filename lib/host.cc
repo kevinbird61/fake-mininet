@@ -1,28 +1,33 @@
 #include "host.h"
 
-Host::Host(){
-    this->type = std::string("host"); 
+Host::Host()
+{
+    this->type = std::string("host");
     this->next = NULL;
 }
 
-Host::Host(Host *h){
+Host::Host(Host *h)
+{
     this->name = h->name;
-    this->type = std::string("host"); 
+    this->type = std::string("host");
     this->next = NULL;
 }
 
-Host::Host(std::string name){
+Host::Host(std::string name)
+{
     this->name = name;
-    this->type = std::string("host"); 
+    this->type = std::string("host");
     this->next = NULL;
 }
 
-Host::~Host(){}
+Host::~Host() {}
 
-void Host::set_name(std::string name){
+void Host::set_name(std::string name)
+{
     this->name = name;
 }
 
-std::string Host::get_name(){
+std::string Host::get_name()
+{
     return this->name;
 }
