@@ -26,6 +26,7 @@ You can see the [example](example/):
 | **Network Flow** | Generate the simple graph, and export it's dotfile. And using graphviz to generate png from this dotfile. | [1] | ![](example/stdin/simple_graph.png) |
 | **API:Example (build & demo)** | Using `make lib` to generate library of fake-mininet - `libfakemn.a`, and use it within your program. | [2] | [api example code](example/api/api.cc) |
 | **API: Path between 2 vertices** | Using API (`NetworkManager`, `Path`) to create network topology, and get the available paths between 2 selected vertices. | [2] | [path example code](example/api/path.cc) |
+| **API: Ford-Fulkerson Labeling Algorithm** | Apply labeling algorithm on simplest graph, which present in the [first demo](example/stdin/simple_graph.png). | [2] | [augment path example code](example/api/augment.cc) |
 
 Command References:    
 [1]

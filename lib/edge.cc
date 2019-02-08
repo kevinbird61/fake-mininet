@@ -11,8 +11,8 @@ Edge::Edge(Edge *e)
     this->cap=e->cap;
     this->flowval=e->flowval;
     this->next=NULL;
-    this->head=NULL;
-    this->tail=NULL;
+    this->head=e->head;
+    this->tail=e->tail;
 }
 
 Edge::~Edge() {}
