@@ -43,18 +43,28 @@ int Path::trav(std::string prev, std::string end){
         iter!=this->tree[prev]->br.end(); iter++)
         {
             // std::cout << this->tree[prev]->br.size() << " " << prev << ":" << iter->first << std::endl;
-            this->path.push_back(iter->second);
-            if(iter->first==end){
-                // reach the end
-                std::vector<Node *> newPath;
-                newPath = this->path;
-                this->paths.push_back(newPath);
-            } else {
-                // not end, continue
-                this->trav(iter->first, end);
+            // check if iter->first is already in path
+            bool flag=true;
+            for(int i=0;i<this->path.size();i++){
+                if(this->path.at(i)->name==iter->first){
+                    flag=false;
+                    break;
+                }
             }
-            // pop back
-            this->path.pop_back();
+            if(flag){
+                this->path.push_back(iter->second);
+                if(iter->first==end){
+                    // reach the end
+                    std::vector<Node *> newPath;
+                    newPath = this->path;
+                    this->paths.push_back(newPath);
+                } else {
+                    // not end, continue
+                    this->trav(iter->first, end);
+                }
+                // pop back
+                this->path.pop_back();
+            }
         }
 }
 

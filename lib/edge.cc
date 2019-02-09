@@ -1,7 +1,7 @@
 #include "edge.h"
 
 Edge::Edge()
-    :cap(2),flowval(1)
+    :cap(2),flowval(0)
 {
     this->next = NULL;
 }
@@ -16,6 +16,13 @@ Edge::Edge(Edge *e)
 }
 
 Edge::~Edge() {}
+
+void Edge::reverse()
+{
+    Vertex *tmp = this->tail;
+    this->tail = this->head;
+    this->head = tmp;
+}
 
 void Edge::link(Vertex *head, Vertex *tail)
 {

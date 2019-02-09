@@ -26,8 +26,8 @@ int main(int argc, char** argv){
     nm->connect(std::string("x"), std::string("y"));
     nm->connect(std::string("y"), std::string("t"));
     // set the capacity & flowvalue of the link
-    nm->setlink(std::string("s"), std::string("x"), 1, 0);
-    nm->setlink(std::string("u"), std::string("v"), 0, 1);
+    nm->setlink(std::string("s"), std::string("x"), 1, 0);  // set flow value
+    nm->setlink(std::string("u"), std::string("v"), 0, 1);  // set capacity
     nm->setlink(std::string("v"), std::string("x"), 0, 1);
     nm->setlink(std::string("x"), std::string("y"), 0, 1);
     nm->setlink(std::string("v"), std::string("t"), 1, 0);

@@ -191,6 +191,49 @@ void NetworkManager::connect(std::string hname, std::string tname)
     std::cout << "Connect `" << hname << "` with `" << tname << "` successfully." << std::endl;
 }
 
+void NetworkManager::connect_r(std::string hname, std::string tname)
+{
+    // check if hname(head) and tname(tail) existed or not
+    unsigned int index = djb2(hname.c_str())%this->tablesize;
+    Vertex *head, *tail;
+    Vertex *check = this->vlist[index];
+    int cnt=0;
+    while(check!=NULL) {
+        if(check->name == hname) {
+            head=check;
+            cnt++;
+            break;
+        }
+    }
+    index = djb2(tname.c_str())%this->tablesize;
+    check = this->vlist[index];
+    while(check!=NULL) {
+        if(check->name == tname) {
+            tail=check;
+            cnt++;
+            break;
+        }
+    }
+
+    if(cnt != 2) {
+        std::cout << "Illegal name of vertex, please using print/debug command to check current topo." << std::endl;
+        return;
+    }
+
+    // create edge, and link those 2 together
+    Edge *e, *re;
+    e = new Edge();
+    re = new Edge();
+    e->link(head, tail);
+    re->link(tail, head);
+    // push into nm
+    this->add_edge(e);
+    this->add_edge(re);
+
+    std::cout << "Connect `" << hname << "` with `" << tname << "` successfully." << std::endl;
+    std::cout << "Reversely Connect `" << tname << "` with `" << hname << "` successfully." << std::endl;
+}
+
 void NetworkManager::linkup(Vertex *head, Vertex *tail)
 {
     // add vertex first

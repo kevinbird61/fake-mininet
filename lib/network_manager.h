@@ -22,6 +22,7 @@ public:
     void print_all_e(); // all edges
     // between 2 vertex
     void connect(std::string hname, std::string tname);
+    void connect_r(std::string hname, std::string tname); // also add reverse connection
     void disconnect(std::string hname, std::string tname);
     int connected(std::string hname, std::string tname);
     // setlink
