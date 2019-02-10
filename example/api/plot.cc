@@ -29,6 +29,7 @@ int main(int argc, char** argv){
     nm->connect("b", "c");
     nm->connect("b", "d");
     nm->connect("d", "b");
+    nm->connect("d", "c");
     nm->connect("d", "h");
 
     nm->connect("e", "f");

@@ -1,6 +1,7 @@
 #include <algorithm>
 #include <iostream>
 #include <unistd.h>
+#include <queue>
 #include <map>
 #include "network_manager.h"
 #include "gplot.h"
@@ -11,10 +12,11 @@ using namespace std;
 // create NetworkManager first
 NetworkManager *nm = new NetworkManager();
 map<string, vector<Edge *>> adv;
-vector<Edge *> dfs_paths;
+vector<Edge *> bfs_paths;
 vector<Vertex *> existed_vertices;
+queue<Edge *> bfs_search;
 
-void dfs(string src);
+void bfs(string src);
 
 int main(int argc, char** argv){
     // build basic topo
@@ -52,46 +54,49 @@ int main(int argc, char** argv){
         elist=elist->next;
     }
 
-    // DFS
-    // push this node into existed list
+    // BFS
     existed_vertices.push_back(adv["b"].at(0)->head);
-    dfs("b");
+    bfs("b");
+    while(!bfs_search.empty()){
+        bfs(bfs_search.front()->tail->name);
+        bfs_search.pop();
+    }
 
-    Edge *dfs_elist=NULL, *tmp=dfs_elist;
+    Edge *bfs_elist=NULL, *tmp=bfs_elist;
 
-    cout << "DFS: " << endl;
-    for(int i=0;i<dfs_paths.size();i++){
-        cout << dfs_paths.at(i)->head->name << "->" << dfs_paths.at(i)->tail->name << endl;
+    cout << "BFS: " << endl;
+    for(int i=0;i<bfs_paths.size();i++){
+        cout << bfs_paths.at(i)->head->name << "->" << bfs_paths.at(i)->tail->name << endl;
         if(tmp==NULL){
-            dfs_elist = new Edge(dfs_paths.at(i));
-            tmp = dfs_elist;
+            bfs_elist = new Edge(bfs_paths.at(i));
+            tmp = bfs_elist;
         } else {
-            tmp->next = new Edge(dfs_paths.at(i));
+            tmp->next = new Edge(bfs_paths.at(i));
             tmp = tmp->next;
         }
     }
 
     Gplot *gp = new Gplot();
-    gp->gp_add(dfs_elist);
+    gp->gp_add(bfs_elist);
     gp->gp_dump(true);
-    gp->gp_export("dfs");
+    gp->gp_export("bfs");
 
     return 0;
 }
 
-void dfs(string src){
+void bfs(string src){
     for(int i=0;i<adv[src].size();i++){
         // cout << adv[src].at(i)->head->name << "=>" << adv[src].at(i)->tail->name << endl;
-        // check edge is already existed or not
-        if(find(dfs_paths.begin(), dfs_paths.end(), adv[src].at(i))==dfs_paths.end()){
-            // check the tail is in the existed_vertices or not
+        // check the tail is in the existed_vertices or not
+        if(find(bfs_paths.begin(), bfs_paths.end(), adv[src].at(i))==bfs_paths.end()){
+            // if tail is not existed, then push into existed vertices
             if(find(existed_vertices.begin(), existed_vertices.end(), adv[src].at(i)->tail)==existed_vertices.end()){
-                // and push this edge into dfs result
-                dfs_paths.push_back(adv[src].at(i));
+                // and push this edge into bfs result
+                bfs_paths.push_back(adv[src].at(i));
                 // not existed, then push into existed
                 existed_vertices.push_back(adv[src].at(i)->tail);
-                // recursive
-                dfs(adv[src].at(i)->tail->name);
+                // push
+                bfs_search.push(adv[src].at(i));
             }
         }
     }
