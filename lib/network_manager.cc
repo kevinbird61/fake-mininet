@@ -351,18 +351,20 @@ Vertex *NetworkManager::get_all_nodes()
         Vertex *header = this->vlist[i];
         while(header!=NULL) {
             if(rlist==NULL) {
-                if(header->type==std::string("switch")) {
+                /*if(header->type==std::string("switch")) {
                     rlist = new Switch((Switch *)header);
                 } else if(header->type==std::string("host")) {
                     rlist = new Host((Host *)header);
-                }
+                }*/
+                rlist=header;
                 tmp=rlist;
             } else {
-                if(header->type==std::string("switch")) {
+                /*if(header->type==std::string("switch")) {
                     tmp->next = new Switch((Switch *)header);
                 } else if(header->type==std::string("host")) {
                     tmp->next = new Host((Host *)header);
-                }
+                }*/
+                tmp->next=header;
                 tmp=tmp->next;
             }
             header=header->next;
