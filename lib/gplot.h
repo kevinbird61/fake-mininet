@@ -11,7 +11,7 @@ class Gplot
 public:
     Gplot();
     ~Gplot();
-    int gp_add(Edge *e);           // add new branch into Gplot::dotfile
+    int gp_add(Edge *e);           // add new branch into Gplot::dotfile 
     std::string gp_dump(bool flag);// if true, using digraph; otherwise using normal graph
     int gp_export(std::string filename);
 private:

@@ -1,4 +1,5 @@
-EXEC:=api.out capacity.out path.out augment.out max-flow.out
+EXEC:=api.out capacity.out path.out augment.out max-flow.out \
+	dfs.out plot.out
 OBJS:=libfakemn.a
 LIBS:=../../lib
 CXXFLAGS:= -std=c++11

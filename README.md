@@ -23,10 +23,12 @@ You can see the [example](example/):
 
 | Scenario | Description | Command | Result |
 | :--- | :--- | :--- | :---: |
-| **Network Flow** | Generate the simple graph, and export it's dotfile. And using graphviz to generate png from this dotfile. | [1] | ![](example/stdin/simple_graph.png) |
-| **API:Example (build & demo)** | Using `make lib` to generate library of fake-mininet - `libfakemn.a`, and use it within your program. | [2] | [api example code](example/api/api.cc) |
+| **CLI: Network Flow** | Generate the simple graph, and export it's dotfile. And using graphviz to generate png from this dotfile. | [1] | ![](example/stdin/simple_graph.png) |
+| **API: Example (build & demo)** | Using `make lib` to generate library of fake-mininet - `libfakemn.a`, and use it within your program. | [2] | [api example code](example/api/api.cc) |
 | **API: Path between 2 vertices** | Using API (`NetworkManager`, `Path`) to create network topology, and get the available paths between 2 selected vertices. | [2] | [path example code](example/api/path.cc) |
 | **API: Find Max-Flow** | Apply *Ford-Fulkerson Labeling Algorithm* on simplest graph, which present in the [first demo](example/stdin/simple_graph.png). | [2] | [max-flow example code](example/api/max-flow.cc) |
+| **API: Plot the Network Topology** | Using `Gplot` class to generate dotfile from your current network topology. (Export a dotfile, will need graphviz dependency to generate figure from this file.) | x | ![](example/api/plot.png) |
+| **API: DFS** | Apply depth-first search on the network present in the previous plotting example. ( Start point: `"a"` ) | x | ![](example/api/dfs.png) |
 
 Command References:    
 [1]

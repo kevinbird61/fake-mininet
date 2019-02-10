@@ -6,6 +6,13 @@ Switch::Switch()
     this->next = NULL;
 }
 
+Switch::Switch(char *name)
+{
+    this->name = std::string(name);
+    this->type = std::string("switch");
+    this->next = NULL;
+}
+
 Switch::Switch(Switch *sw)
 {
     this->name = sw->name;

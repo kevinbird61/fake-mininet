@@ -1,0 +1,42 @@
+digraph G{
+rankdir=LR;
+node [shape=record];
+
+a [label="a(switch)"];
+e [label="e(switch)"];
+a->e[label="(0) 2"];
+a [label="a(switch)"];
+h [label="h(switch)"];
+a->h[label="(0) 2"];
+b [label="b(host)"];
+a [label="a(switch)"];
+b->a[label="(0) 2"];
+b [label="b(host)"];
+c [label="c(host)"];
+b->c[label="(0) 2"];
+b [label="b(host)"];
+d [label="d(switch)"];
+b->d[label="(0) 2"];
+d [label="d(switch)"];
+b [label="b(host)"];
+d->b[label="(0) 2"];
+d [label="d(switch)"];
+h [label="h(switch)"];
+d->h[label="(0) 2"];
+e [label="e(switch)"];
+f [label="f(host)"];
+e->f[label="(0) 2"];
+e [label="e(switch)"];
+h [label="h(switch)"];
+e->h[label="(0) 2"];
+g [label="g(host)"];
+e [label="e(switch)"];
+g->e[label="(0) 2"];
+f [label="f(host)"];
+g [label="g(host)"];
+f->g[label="(0) 2"];
+h [label="h(switch)"];
+g [label="g(host)"];
+h->g[label="(0) 2"];
+
+}

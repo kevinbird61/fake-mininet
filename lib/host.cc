@@ -13,6 +13,13 @@ Host::Host(Host *h)
     this->next = NULL;
 }
 
+Host::Host(char *name)
+{
+    this->name = std::string(name);
+    this->type = std::string("host");
+    this->next = NULL;
+}
+
 Host::Host(std::string name)
 {
     this->name = name;

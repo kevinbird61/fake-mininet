@@ -8,6 +8,7 @@ class Host: public Vertex
 public:
     Host();
     Host(Host *h);
+    Host(char *name);
     Host(std::string name);
     ~Host();
     void set_name(std::string name);

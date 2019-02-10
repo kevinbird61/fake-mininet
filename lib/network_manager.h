@@ -37,11 +37,11 @@ public:
     int add_switch(std::string name);
     int add_switch();   // using get_sw_name method
     Switch *create_switch();
-    Switch *create_switch(std::string);
+    Switch *create_switch(std::string name);
     int add_host(std::string name);
     int add_host();
     Host *create_host();
-    Host *create_host(std::string);
+    Host *create_host(std::string name);
     void linkup(Vertex *head, Vertex *tail);
     void linkdown(Vertex *head, Vertex *tail);
     Vertex *get_all_nodes();
