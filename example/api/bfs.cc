@@ -55,7 +55,7 @@ int main(int argc, char** argv){
     }
 
     // BFS
-    existed_vertices.push_back(adv["b"].at(0)->head);
+    existed_vertices.push_back(nm->get_node("b"));
     bfs("b");
     while(!bfs_search.empty()){
         bfs(bfs_search.front()->tail->name);
