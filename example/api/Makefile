@@ -1,5 +1,5 @@
-EXEC:=api.out capacity.out path.out augment.out max-flow.out \
-	plot.out dfs.out bfs.out
+EXEC:=api.out capacity.out find-path.out augment.out max-flow.out \
+	plot.out dfs.out bfs.out sssp.out
 OBJS:=libfakemn.a
 LIBS:=../../lib
 CXXFLAGS:= -std=c++11
@@ -8,7 +8,7 @@ all: clean $(EXEC)
 
 # executable (using static library)
 # need libfakemn.a (compile from the Makefile of project root)
-$(EXEC): %.out: %.cc
+$(EXEC): %.out: %/main.cc
 	g++ -o $@ $< -I$(LIBS) -g3 -L. -lfakemn $(CXXFLAGS)
 
 # reset & clean
