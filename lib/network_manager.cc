@@ -453,10 +453,10 @@ void NetworkManager::setlink(std::string hname, std::string tname, int mode, uns
             if((traversal->head->name==hname && traversal->tail->name==tname)) {
                 // setlink
                 if(mode==0) {
-                    traversal->cap=val;
+                    traversal->set_cap(val);
                     std::cout << "Set the capacity of link `" << hname << "` with `" << tname << "` to " << val << " successfully." << std::endl;
                 } else if(mode==1) {
-                    traversal->flowval=val;
+                    traversal->set_flowval(val);
                     std::cout << "Set the flow value of link `" << hname << "` with `" << tname << "` to " << val << " successfully." << std::endl;
                 } else {
                     std::cout << "Not support this link mode yet." << std::endl;

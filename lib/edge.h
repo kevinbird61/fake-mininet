@@ -11,8 +11,8 @@ public:
     ~Edge();
     void link(Vertex *head, Vertex *tail);
     void reverse();
-    void set_cap(unsigned int cap);
-    void set_flowval(unsigned int flowval);
+    void set_cap(int cap);
+    void set_flowval(int flowval);
     Vertex *head;
     Vertex *tail;
     int cap; // capacity of link (default: 2)
