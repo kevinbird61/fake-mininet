@@ -398,7 +398,7 @@ Edge *NetworkManager::get_edge(Vertex *head, Vertex *tail)
     Edge *trav = this->elist;
     while(trav!=NULL){
         if((trav->head->name==head->name)&&(trav->tail->name==tail->name)){
-            return new Edge(trav);
+            return trav;
         }
         trav=trav->next;
     }
@@ -410,7 +410,7 @@ Edge *NetworkManager::get_edge(std::string hname, std::string tname)
     Edge *trav = this->elist;
     while(trav!=NULL){
         if((trav->head->name==hname)&&(trav->tail->name==tname)){
-            return new Edge(trav);
+            return trav;
         }
         trav=trav->next;
     }
