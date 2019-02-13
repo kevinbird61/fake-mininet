@@ -499,14 +499,53 @@ int NetworkManager::connected(std::string hname, std::string tname)
 
     // check all edges
     Edge *traversal = this->elist;
-    if(traversal!=NULL) {
+    while(traversal!=NULL) {
         if((traversal->head->name==hname && traversal->tail->name==tname)||(traversal->head->name==tname && traversal->tail->name==hname)) {
             // find
             return 0;
         }
-        while(traversal->next!=NULL) {
-            traversal=traversal->next;
+        traversal=traversal->next;
+    }
+    return 1;
+}
+
+int NetworkManager::connected_d(std::string hname, std::string tname)
+{
+    // check if hname(head) and tname(tail) existed or not
+    unsigned int index = djb2(hname.c_str())%this->tablesize;
+    Vertex *head, *tail;
+    Vertex *check = this->vlist[index];
+    int cnt=0;
+    while(check!=NULL) {
+        if(check->name == hname) {
+            head=check;
+            cnt++;
+            break;
         }
+    }
+    index = djb2(tname.c_str())%this->tablesize;
+    check = this->vlist[index];
+    while(check!=NULL) {
+        if(check->name == tname) {
+            tail=check;
+            cnt++;
+            break;
+        }
+    }
+
+    if(cnt != 2) {
+        std::cout << "Illegal name of vertex, please using print/debug command to check current topo." << std::endl;
+        return 1;
+    }
+
+    // check all edges
+    Edge *traversal = this->elist;
+    while(traversal!=NULL) {
+        if((traversal->head->name==hname && traversal->tail->name==tname)) {
+            // find
+            return 0;
+        }
+        traversal=traversal->next;
     }
     return 1;
 }

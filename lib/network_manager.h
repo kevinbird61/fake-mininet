@@ -25,6 +25,7 @@ public:
     void connect_r(std::string hname, std::string tname); // also add reverse connection
     void disconnect(std::string hname, std::string tname);
     int connected(std::string hname, std::string tname);
+    int connected_d(std::string hname, std::string tname); // directed
     // setlink
     void setlink(std::string hname, std::string tname, int mode, unsigned int val);
     // switch/host name (auto increment)
