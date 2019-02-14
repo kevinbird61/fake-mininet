@@ -417,7 +417,7 @@ Edge *NetworkManager::get_edge(std::string hname, std::string tname)
     return NULL;
 }
 
-void NetworkManager::setlink(std::string hname, std::string tname, int mode, unsigned int val)
+void NetworkManager::setlink(std::string hname, std::string tname, int mode, int val)
 {
     // check if hname(head) and tname(tail) existed or not
     unsigned int index = djb2(hname.c_str())%this->tablesize;

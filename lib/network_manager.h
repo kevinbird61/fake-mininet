@@ -27,7 +27,7 @@ public:
     int connected(std::string hname, std::string tname);
     int connected_d(std::string hname, std::string tname); // directed
     // setlink
-    void setlink(std::string hname, std::string tname, int mode, unsigned int val);
+    void setlink(std::string hname, std::string tname, int mode, int val);
     // switch/host name (auto increment)
     std::string get_sw_name();
     std::string get_h_name();
