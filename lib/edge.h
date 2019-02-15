@@ -17,6 +17,7 @@ public:
     Vertex *tail;
     int cap; // capacity of link (default: 2)
     int flowval; // flow value of link
+    std::string tag; // user-defined tag
     Edge *next;
 };
 
