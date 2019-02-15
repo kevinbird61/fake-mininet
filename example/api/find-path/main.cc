@@ -34,7 +34,7 @@ int main(int argc, char** argv){
     // create tree from edge list
     path->append(nm->elist);
     // find paths (will return std::vector<std::vector<Node *>> object)
-    std::vector<std::vector<Node *>> avail_paths = path->find_paths(std::string("s"), std::string("t"));
+    path->find_paths(std::string("s"), std::string("t"));
     // debug (show the paths found between 2 vertices that user specified)
     path->debug();
 

@@ -37,7 +37,7 @@ int main(int argc, char** argv){
     // create tree from edge list
     path->append(nm->elist);
     // find paths (will return std::vector<std::vector<Node *>> object)
-    std::vector<std::vector<Node *>> avail_paths = path->find_paths(std::string("s"), std::string("t"));
+    std::vector<std::vector<Edge *>> avail_paths = path->find_paths(std::string("s"), std::string("t"));
     // debug (show the paths found between 2 vertices that user specified)
     path->debug();
 
@@ -55,8 +55,8 @@ int main(int argc, char** argv){
             for(int x=0;x<avail_paths.at(i).size();x++){
                 // inc 
                 if(x+1<avail_paths.at(i).size())
-                    weight += nm->get_edge(avail_paths.at(i).at(x)->name, avail_paths.at(i).at(x+1)->name)->flowval;
-                std::cout << avail_paths.at(i).at(x)->name << " ";
+                    weight += nm->get_edge(avail_paths.at(i).at(x)->head->name, avail_paths.at(i).at(x)->tail->name)->flowval;
+                std::cout << avail_paths.at(i).at(x)->head->name << " ";
             }
             std::cout << "\n";
             std::cout << "Capacity of current flow: " << weight << std::endl;
