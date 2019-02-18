@@ -1,5 +1,5 @@
-EXEC:=api.out capacity.out find-path.out augment.out max-flow.out \
-	plot.out dfs.out bfs.out sssp.out
+EXEC:=api.out capacity.out find-path.out max-flow.out \
+	plot.out dfs.out bfs.out sssp.out file.out
 OBJS:=libfakemn.a
 LIBS:=../../lib
 CXXFLAGS:= -std=c++11

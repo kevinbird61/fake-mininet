@@ -27,6 +27,78 @@ NetworkManager::~NetworkManager()
 
 }
 
+int NetworkManager::interpret(std::string filename)
+{
+    std::string raw;
+    std::ifstream fin(filename);
+    std::vector<std::string> args;
+    int status=0;
+
+    // read 
+    if(fin.is_open()){
+        while(getline(fin, raw)){
+            args = this->readline(raw);
+            status = this->execute(args);
+        }
+    } else {
+        std::cout << "Illegal input command file." << std::endl;
+    }
+}
+
+std::vector<std::string> NetworkManager::readline(std::string raw)
+{
+    std::string tmp;
+    std::vector<std::string> args_token;
+    // split into several token
+    std::stringstream ssin(raw);
+    while(ssin.good()) {
+        ssin >> tmp;
+        args_token.push_back(tmp);
+    }
+    return args_token;
+}
+
+int NetworkManager::execute(std::vector<std::string> args)
+{
+    // FIXME: currently all node will use Switch class 
+    // args[0], args[1] : vertex 1, vertex 2
+    // args[2] : capacity
+    // args[3] : flowval
+    if(args.size()<2){
+        // error
+        std::cout << "Need to specify at least 2 elements (e.g. `a b`) to represent the connection." << std::endl;
+        return 1;
+    } else if(args.size()==2){
+        // a <---default---> b
+        std::cout << "Set the link." << std::endl;
+        this->add_switch(args[0]);
+        this->add_switch(args[1]);
+        this->connect(args[0], args[1]);
+        return 1;
+    } else if(args.size()==3){
+        // a <---set cap---> b
+        std::cout << "Set the link + capacity." << std::endl;
+        this->add_switch(args[0]);
+        this->add_switch(args[1]);
+        this->connect(args[0], args[1]);
+        this->setlink(args[0], args[1], 0, std::atoi(args[2].c_str()));
+        return 1;
+    } else if(args.size()==4){
+        // a <---set cap,val---> b
+        std::cout << "Set the link + capacity + flow value." << std::endl;
+        this->add_switch(args[0]);
+        this->add_switch(args[1]);
+        this->connect(args[0], args[1]);
+        this->setlink(args[0], args[1], 0, std::atoi(args[2].c_str()));
+        this->setlink(args[0], args[1], 1, std::atoi(args[3].c_str()));
+        return 1;
+    } else {
+        // error
+        std::cout << "Too many arguments, please check the manual first." << std::endl;
+        return 1;
+    }
+}
+
 int NetworkManager::add_vertex(Vertex *v)
 {
     // find the insert point
@@ -448,24 +520,25 @@ void NetworkManager::setlink(std::string hname, std::string tname, int mode, int
 
     // check all edges
     Edge *traversal = this->elist;
-    if(traversal!=NULL) {
-        while(traversal->next!=NULL) {
-            if((traversal->head->name==hname && traversal->tail->name==tname)) {
-                // setlink
-                if(mode==0) {
-                    traversal->set_cap(val);
-                    std::cout << "Set the capacity of link `" << hname << "` with `" << tname << "` to " << val << " successfully." << std::endl;
-                } else if(mode==1) {
-                    traversal->set_flowval(val);
-                    std::cout << "Set the flow value of link `" << hname << "` with `" << tname << "` to " << val << " successfully." << std::endl;
-                } else {
-                    std::cout << "Not support this link mode yet." << std::endl;
-                }
-                return ;
+    while(traversal!=NULL) {
+        if((traversal->head->name==hname && traversal->tail->name==tname)) {
+            // setlink
+            if(mode==0) {
+                traversal->set_cap(val);
+                std::cout << "Set the capacity of link `" << hname << "` with `" << tname << "` to " << val << " successfully." << std::endl;
+            } else if(mode==1) {
+                traversal->set_flowval(val);
+                std::cout << "Set the flow value of link `" << hname << "` with `" << tname << "` to " << val << " successfully." << std::endl;
+            } else {
+                std::cout << "Not support this link mode yet." << std::endl;
             }
-            traversal=traversal->next;
+            return ;
         }
+        traversal=traversal->next;
     }
+
+    std::cout << "Not found current link: " << hname << "<->" << tname << std::endl;
+    return;
 }
 
 int NetworkManager::connected(std::string hname, std::string tname)

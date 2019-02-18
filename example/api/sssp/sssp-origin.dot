@@ -37,6 +37,6 @@ h [label="h(switch)"];
 g->h[label="(5) 5"];
 h [label="h(switch)"];
 e [label="e(switch)"];
-h->e[label="(0) 2"];
+h->e[label="(4) 4"];
 
 }

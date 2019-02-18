@@ -79,7 +79,7 @@ int main(int argc, char** argv){
     Gplot *gp = new Gplot();
     gp->gp_add(bfs_elist);
     gp->gp_dump(true);
-    gp->gp_export("bfs");
+    gp->gp_export("bfs/bfs");
 
     return 0;
 }

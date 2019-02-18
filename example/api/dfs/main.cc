@@ -74,7 +74,7 @@ int main(int argc, char** argv){
     Gplot *gp = new Gplot();
     gp->gp_add(dfs_elist);
     gp->gp_dump(true);
-    gp->gp_export("dfs");
+    gp->gp_export("dfs/dfs");
 
     return 0;
 }

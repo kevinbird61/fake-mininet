@@ -2,6 +2,9 @@
 #define __NETWORK_MANAGER__
 
 #include <iostream>
+#include <sstream>
+#include <fstream>
+#include <vector>
 
 #include "vertex.h"
 #include "switch.h"
@@ -35,6 +38,7 @@ public:
     void clear();
 
     // For API
+    int interpret(std::string filename); // read topology file 
     int add_switch(std::string name);
     int add_switch();   // using get_sw_name method
     Switch *create_switch();
@@ -56,6 +60,10 @@ public:
     int tablesize;
     int switch_num;
     int host_num;
+
+private: 
+    std::vector<std::string> readline(std::string raw);
+    int execute(std::vector<std::string> args);
 };
 
 #endif
