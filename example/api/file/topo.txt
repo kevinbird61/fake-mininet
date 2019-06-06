@@ -1,3 +1,4 @@
-a b 3 1
-b c 3 2
-c d 5 3
+a b 
+b c 
+c d
+c e

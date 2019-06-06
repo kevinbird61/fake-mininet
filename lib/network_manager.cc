@@ -354,10 +354,11 @@ void NetworkManager::disconnect(std::string hname, std::string tname)
     // find edge, and then destroy
     Edge *traversal=this->elist,*prev=this->elist;
     while(traversal!=NULL) {
+        // std::cout << "traverse: " << traversal->head->name << " - " << traversal->tail->name << std::endl;
         if(traversal->head->name==hname && traversal->tail->name==tname) {
             std::cout << "Disconnect `" << hname << "` with `" << tname << "` successfully." << std::endl;
-            if(prev==this->elist) {
-                this->elist=this->elist->next;
+            if(prev==traversal) {
+                this->elist=traversal->next;
             } else {
                 prev->next=traversal->next;
             }
@@ -401,8 +402,8 @@ void NetworkManager::linkdown(Vertex *head, Vertex *tail)
     while(traversal!=NULL) {
         if(traversal->head->name==head->name && traversal->tail->name==tail->name) {
             std::cout << "Disconnect `" << head->name << "` with `" << tail->name << "` successfully." << std::endl;
-            if(prev==this->elist) {
-                this->elist=this->elist->next;
+            if(prev==traversal) {
+                this->elist=traversal->next;
             } else {
                 prev->next=traversal->next;
             }
