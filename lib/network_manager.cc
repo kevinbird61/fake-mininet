@@ -80,17 +80,17 @@ int NetworkManager::execute(std::vector<std::string> args)
         std::cout << "Set the link + capacity." << std::endl;
         this->add_switch(args[0]);
         this->add_switch(args[1]);
-        this->connect(args[0], args[1]);
-        this->setlink(args[0], args[1], 0, std::atoi(args[2].c_str()));
+        this->connect_with_val(args[0], args[1], std::atoi(args[2].c_str()), 0);
+        // this->setlink(args[0], args[1], 0, std::atoi(args[2].c_str()));
         return 1;
     } else if(args.size()==4){
         // a <---set cap,val---> b
         std::cout << "Set the link + capacity + flow value." << std::endl;
         this->add_switch(args[0]);
         this->add_switch(args[1]);
-        this->connect(args[0], args[1]);
-        this->setlink(args[0], args[1], 0, std::atoi(args[2].c_str()));
-        this->setlink(args[0], args[1], 1, std::atoi(args[3].c_str()));
+        this->connect_with_val(args[0], args[1], std::atoi(args[2].c_str()), std::atoi(args[3].c_str()));
+        //this->setlink(args[0], args[1], 0, std::atoi(args[2].c_str()));
+        //this->setlink(args[0], args[1], 1, std::atoi(args[3].c_str()));
         return 1;
     } else {
         // error
@@ -256,6 +256,51 @@ void NetworkManager::connect(std::string hname, std::string tname)
     // create edge, and link those 2 together
     Edge *e;
     e = new Edge();
+    e->link(head, tail);
+    // push into nm
+    this->add_edge(e);
+
+    std::cout << "Connect `" << hname << "` with `" << tname << "` successfully." << std::endl;
+}
+
+void NetworkManager::connect_with_val(std::string hname, std::string tname, int cap, int flowval)
+{
+    // check if hname(head) and tname(tail) existed or not
+    unsigned int index = djb2(hname.c_str())%this->tablesize;
+    Vertex *head, *tail;
+    Vertex *check = this->vlist[index];
+    int cnt=0;
+    while(check!=NULL) {
+        if(check->name == hname) {
+            head=check;
+            cnt++;
+            break;
+        }
+    }
+    index = djb2(tname.c_str())%this->tablesize;
+    check = this->vlist[index];
+    while(check!=NULL) {
+        if(check->name == tname) {
+            tail=check;
+            cnt++;
+            break;
+        }
+    }
+
+    if(cnt != 2) {
+        std::cout << "Illegal name of vertex, please using print/debug command to check current topo." << std::endl;
+        return;
+    }
+
+    // create edge, and link those 2 together
+    Edge *e;
+    e = new Edge();
+    // set cap/flowval
+    if(cap>0)
+        e->set_cap(cap);
+    if(flowval>0)
+        e->set_flowval(flowval);
+    // link
     e->link(head, tail);
     // push into nm
     this->add_edge(e);
